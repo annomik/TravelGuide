@@ -1,6 +1,6 @@
 package by.mikulichhanna.travel.guide.web;
 
-import by.mikulichhanna.travel.guide.core.dto.TownCreateDTO;
+import by.mikulichhanna.travel.guide.core.dto.TownWithAttractionsDTO;
 import by.mikulichhanna.travel.guide.service.TownService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -12,14 +12,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/v1/recipe")
+@RequestMapping("/api/v1/town")
 public class TownController {
 
     private final TownService townService;
 
     @PostMapping
-    public ResponseEntity<?> addNewTown(@RequestBody TownCreateDTO recipeCreateDTO) {
-        townService.addTown(recipeCreateDTO);
+    public ResponseEntity<?> addNewTown(@RequestBody TownWithAttractionsDTO townDTO) {
+        townService.addTown(townDTO);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 

@@ -1,4 +1,4 @@
-package by.mikulichhanna.travel.guide.repositories.api;
+package by.mikulichhanna.travel.guide.repositories;
 
 import by.mikulichhanna.travel.guide.entity.TownEntity;
 import org.springframework.data.repository.ListCrudRepository;

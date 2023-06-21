@@ -1,7 +1,7 @@
 package by.mikulichhanna.travel.guide.web;
 
-import by.mikulichhanna.travel.guide.core.dto.TouristAttractionDTO;
-import by.mikulichhanna.travel.guide.service.TouristAttractionService;
+import by.mikulichhanna.travel.guide.core.dto.AttractionDTO;
+import by.mikulichhanna.travel.guide.service.AttractionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,14 +9,14 @@ import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/v1/product")
-public class TouristAttractionController {
+@RequestMapping("/api/v1/attraction")
+public class AttractionController {
 
-    private final TouristAttractionService touristAttractionService;
+    private final AttractionService attractionService;
 
     @PostMapping
-    public ResponseEntity<?> addNewAttraction(@RequestBody TouristAttractionDTO product) {
-        touristAttractionService.addNewAttraction(product);
+    public ResponseEntity<?> addNewAttraction(@RequestBody AttractionDTO product) {
+        attractionService.addNewAttraction(product);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
