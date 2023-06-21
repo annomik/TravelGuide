@@ -4,13 +4,16 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @RequiredArgsConstructor
-//@JsonIgnoreProperties(ignoreUnknown = true)
-public class TouristAttractionDTO {
+public class TownWithAttractionsDTO {
 
     private String name;
-    private int address;
+    private String countryName;
+    private Integer numberOfPopulation;
+    private List<AttractionDTO> attractions;
 
 }

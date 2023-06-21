@@ -7,9 +7,10 @@ import lombok.Setter;
 @Getter
 @Setter
 @RequiredArgsConstructor
-public class TownCreateDTO {
+public class AttractionDTO {
+
     private String name;
-    private String countryName;
-    private Integer numberOfPopulation;
+    private String address;
+    private TownWithUUID townUUID;
 
 }

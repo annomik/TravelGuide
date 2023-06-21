@@ -4,12 +4,11 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
+import java.util.UUID;
 @Getter
 @Setter
 @RequiredArgsConstructor
-public class TownCreateDTO {
-    private String name;
-    private String countryName;
-    private Integer numberOfPopulation;
+public class TownWithUUID {
+    private UUID uuid;
 
 }
