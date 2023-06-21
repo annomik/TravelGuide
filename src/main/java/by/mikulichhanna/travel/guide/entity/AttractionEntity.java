@@ -32,10 +32,9 @@ public class AttractionEntity {
     @Column(name = "address")
     private String address;
 
-//    @ManyToOne
-//    @JoinColumn(name = "town_uuid")
-//    //@Column(name = "town_uuid")
-//    private TownEntity town;
+    @ManyToOne (fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+    @JoinColumn(name = "town_uuid")
+    private TownEntity town;
 
 
     public AttractionEntity(UUID uuid, LocalDateTime dtCreate,

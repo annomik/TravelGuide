@@ -38,8 +38,8 @@ public class TownEntity {
     @Column(name = "number_of_population")
     private Integer numberOfPopulation;
 
-    @OneToMany //(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "town_uuid")
+    @OneToMany (fetch=FetchType.LAZY, mappedBy = "town", cascade = CascadeType.ALL )
+   // @JoinColumn(name = "town_uuid")
     private List<AttractionEntity> attractions;
 
     public TownEntity(UUID uuid,
