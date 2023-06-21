@@ -46,4 +46,15 @@ public class AttractionEntity {
         this.name = name;
         this.address = address;
     }
+
+    public AttractionEntity(UUID uuid, LocalDateTime dtCreate,
+                            LocalDateTime dtUpdate,
+                            String name, String address, TownEntity town) {
+        this.uuid = uuid;
+        this.dtCreate = dtCreate;
+        this.dtUpdate = dtUpdate;
+        this.name = name;
+        this.address = address;
+        this.town = town;
+    }
 }

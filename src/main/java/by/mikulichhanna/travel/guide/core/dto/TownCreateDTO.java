@@ -1,12 +1,11 @@
 package by.mikulichhanna.travel.guide.core.dto;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
-@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 public class TownCreateDTO {
     private String name;
     private String countryName;

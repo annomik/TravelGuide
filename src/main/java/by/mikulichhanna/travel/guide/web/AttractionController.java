@@ -15,8 +15,8 @@ public class AttractionController {
     private final AttractionService attractionService;
 
     @PostMapping
-    public ResponseEntity<?> addNewAttraction(@RequestBody AttractionDTO product) {
-        attractionService.addNewAttraction(product);
+    public ResponseEntity<?> addNewAttraction(@RequestBody AttractionDTO attractionDTO) {
+        attractionService.addNewAttraction(attractionDTO);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 

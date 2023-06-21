@@ -1,14 +1,13 @@
 package by.mikulichhanna.travel.guide.web;
 
-import by.mikulichhanna.travel.guide.core.dto.TownWithAttractionsDTO;
+import by.mikulichhanna.travel.guide.core.dto.PageDTO;
+import by.mikulichhanna.travel.guide.core.dto.TownCreateDTO;
+import by.mikulichhanna.travel.guide.core.dto.TownWithAllDTO;
 import by.mikulichhanna.travel.guide.service.TownService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -18,17 +17,17 @@ public class TownController {
     private final TownService townService;
 
     @PostMapping
-    public ResponseEntity<?> addNewTown(@RequestBody TownWithAttractionsDTO townDTO) {
+    public ResponseEntity<?> addNewTown(@RequestBody TownCreateDTO townDTO) {
         townService.addTown(townDTO);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-//    @RequestMapping(method = RequestMethod.GET)
-//    public ResponseEntity<PageDTO<RecipeDTO>> getPage(
-//            @RequestParam(name = "page", required = false, defaultValue = "0") int numberOfPage,
-//            @RequestParam(name = "size", required = false, defaultValue = "20") int size){
-//        return ResponseEntity.status(HttpStatus.OK).body(recipeService.getPage(numberOfPage, size));
-//    }
+    @PostMapping
+    public ResponseEntity<PageDTO<TownWithAllDTO>> getPage(
+            @RequestParam(name = "page", required = false, defaultValue = "0") int numberOfPage,
+            @RequestParam(name = "size", required = false, defaultValue = "20") int size){
+        return ResponseEntity.status(HttpStatus.OK).body(townService.getPage(numberOfPage, size));
+    }
 //
 //    @RequestMapping(path = "/{uuid}/dt_update/{dt_update}", method = RequestMethod.PUT)
 //    public ResponseEntity<?> update(@PathVariable("uuid") UUID uuid,

@@ -1,19 +1,21 @@
 package by.mikulichhanna.travel.guide.service;
 
-import by.mikulichhanna.travel.guide.core.dto.AttractionDTO;
+import by.mikulichhanna.travel.guide.core.dto.AttractionWithAllDTO;
+import by.mikulichhanna.travel.guide.core.dto.PageDTO;
 import by.mikulichhanna.travel.guide.core.dto.TownCreateDTO;
-import by.mikulichhanna.travel.guide.core.dto.TownWithAttractionsDTO;
+import by.mikulichhanna.travel.guide.core.dto.TownWithAllDTO;
 import by.mikulichhanna.travel.guide.entity.AttractionEntity;
 import by.mikulichhanna.travel.guide.entity.TownEntity;
 import by.mikulichhanna.travel.guide.repositories.ITownRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.ConversionService;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -31,6 +33,10 @@ public class TownService {
         TownEntity townEntity = conversionService.convert(townCreateDTO, TownEntity.class);
 
         townRepository.save(townEntity);
+    }
+
+    public Optional<TownEntity> findByUUID(UUID uuid){
+        return  townRepository.findById(uuid);
     }
 
 //    @Override
@@ -62,70 +68,50 @@ public class TownService {
 //        recipeRepository.save(townEntity);
 //    }
 //
-//    @Override
-//    public PageDTO<RecipeDTO> getPage(int numberOfPage, int size) {
-//        Pageable pageable = PageRequest.of(numberOfPage, size);
-//        Page<TownEntity> allEntity = recipeRepository.findAll(pageable);
-//        List<RecipeDTO> content = convertListRecipeEntityToDTO(allEntity);
-//
-//        return new PageDTO<>(allEntity.getNumber(),
-//                allEntity.getSize(),
-//                allEntity.getTotalPages(),
-//                allEntity.getTotalElements(),
-//                allEntity.isFirst(),
-//                allEntity.getNumberOfElements(),
-//                allEntity.isLast(),
-//                content
-//        );
-//    }
-//
-//    private List<RecipeDTO> convertListRecipeEntityToDTO(Page<TownEntity> allEntity){
-//        List<RecipeDTO> content = new ArrayList<>();
-//        for (TownEntity townEntity : allEntity) {
-//            int weightOfRecipe = 0;
-//            double caloriesOfRecipe = 0;
-//            double proteinsOfRecipe = 0;
-//            double fatsOfRecipe = 0;
-//            double carbohydratesOfRecipe = 0;
-//            List<CompositionEntity> compositionEntityList = townEntity.getComposition(); // все энтити ингредиентов(продукт+вес
-//            List<CompositionWithAllParametersDTO> composition = new ArrayList<>();
-//            for(CompositionEntity compositionEntity : compositionEntityList) {
-//                Optional<TouristAttractionEntity> productFoundInDB = productService.findByUUID(compositionEntity.getProductEntity().getUuid());
-//                TouristAttractionEntity touristAttractionEntity = productFoundInDB.get(); //product from db
-//                ProductDTO productDTO = conversionService.convert(touristAttractionEntity, ProductDTO.class);
-//                double calories =compositionEntity.getWeight() * productDTO.getCalories() / productDTO.getWeight();
-//                double proteins = compositionEntity.getWeight() * productDTO.getProteins() / productDTO.getWeight();
-//                double fats = compositionEntity.getWeight() * productDTO.getFats() / productDTO.getWeight();
-//                double carbohydrates = compositionEntity.getWeight() * productDTO.getCarbohydrates() / productDTO.getWeight();
-//                CompositionWithAllParametersDTO compositionWithAllParameters = new CompositionWithAllParametersDTO(
-//                        productDTO,
-//                        compositionEntity.getWeight(),
-//                        calories,
-//                        proteins,
-//                        fats,
-//                        carbohydrates);
-//                composition.add(compositionWithAllParameters);
-//                weightOfRecipe +=  compositionEntity.getWeight();
-//                caloriesOfRecipe += calories ;
-//                proteinsOfRecipe += proteins;
-//                fatsOfRecipe += fats ;
-//                carbohydratesOfRecipe += carbohydrates;
-//            }
-//            RecipeDTO recipeDTO = new RecipeDTO(townEntity.getUuid(),
-//                    townEntity.getDtCreate(),
-//                    townEntity.getDtUpdate(),
-//                    townEntity.getTitle(),
-//                    composition,
-//                    weightOfRecipe,
-//                    BigDecimal.valueOf(caloriesOfRecipe).setScale(2, RoundingMode.HALF_UP),
-//                    BigDecimal.valueOf(proteinsOfRecipe).setScale(2, RoundingMode.HALF_UP),
-//                    BigDecimal.valueOf(fatsOfRecipe).setScale(2, RoundingMode.HALF_UP),
-//                    BigDecimal.valueOf(carbohydratesOfRecipe).setScale(2, RoundingMode.HALF_UP)
-//            );
-//            content.add(recipeDTO);
-//        }
-//        return content;
-//    }
+
+    public PageDTO<TownWithAllDTO> getPage(int numberOfPage, int size) {
+        Pageable pageable = PageRequest.of(numberOfPage, size);
+        Page<TownEntity> allEntity = townRepository.findAll(pageable);
+        List<TownWithAllDTO> content = convertListEntityToDTO(allEntity);
+
+        return new PageDTO<>(allEntity.getNumber(),
+                allEntity.getSize(),
+                allEntity.getTotalPages(),
+                allEntity.getTotalElements(),
+                allEntity.isFirst(),
+                allEntity.getNumberOfElements(),
+                allEntity.isLast(),
+                content
+        );
+    }
+
+    private List<TownWithAllDTO> convertListEntityToDTO(Page<TownEntity> allEntity){
+        List<TownWithAllDTO> content = new ArrayList<>();
+
+        for (TownEntity townEntity : allEntity) {
+            List<AttractionEntity> attractionEntities = townEntity.getAttractions();
+            List<AttractionWithAllDTO> listAttractionDTO = new ArrayList<>();
+            for(AttractionEntity attractionEntity: attractionEntities){
+                AttractionWithAllDTO attractionDTO = new AttractionWithAllDTO( attractionEntity.getUuid(),
+                attractionEntity.getDtCreate(),
+                attractionEntity.getDtUpdate(),
+                attractionEntity.getName(),
+                attractionEntity.getAddress()
+                );
+                listAttractionDTO.add(attractionDTO);
+            }
+            TownWithAllDTO townDTO = new TownWithAllDTO(townEntity.getUuid(),
+                    townEntity.getDtCreate(),
+                    townEntity.getDtUpdate(),
+                    townEntity.getTownName(),
+                    townEntity.getCountryName(),
+                    townEntity.getNumberOfPopulation(),
+                    listAttractionDTO
+            );
+            content.add(townDTO);
+        }
+        return content;
+    }
 //
 //    @Override
 //    public void validate(RecipeCreateDTO recipeCreateDTO)  {
