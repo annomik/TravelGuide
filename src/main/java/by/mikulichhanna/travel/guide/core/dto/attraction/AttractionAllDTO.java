@@ -1,21 +1,17 @@
-package by.mikulichhanna.travel.guide.core.dto;
+package by.mikulichhanna.travel.guide.core.dto.attraction;
 
 import by.mikulichhanna.travel.guide.service.converters.serializers.LocalDateTimeToLongSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.UUID;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class TownWithAllDTO {
+public class AttractionAllDTO {
 
     private UUID uuid;
 
@@ -25,11 +21,8 @@ public class TownWithAllDTO {
     @JsonSerialize(using = LocalDateTimeToLongSerializer.class)
     private LocalDateTime dtUpdate;
 
-    private String townName;
-    private String countryName;
-    private Integer numberOfPopulation;
-    private List<AttractionWithAllDTO> attractions;
-
-
+    private String name;
+    private String address;
+   // private TownWithUUID townUUID;
 
 }

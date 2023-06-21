@@ -1,4 +1,4 @@
-package by.mikulichhanna.travel.guide.core.dto;
+package by.mikulichhanna.travel.guide.core.dto.town;
 
 import lombok.*;
 

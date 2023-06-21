@@ -1,5 +1,6 @@
-package by.mikulichhanna.travel.guide.core.dto;
+package by.mikulichhanna.travel.guide.core.dto.attraction;
 
+import by.mikulichhanna.travel.guide.core.dto.town.TownWithUUID;
 import by.mikulichhanna.travel.guide.service.converters.serializers.LocalDateTimeToLongSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.*;
@@ -11,7 +12,7 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AttractionWithAllDTO {
+public class AttractionWithTownDTO {
 
     private UUID uuid;
 
@@ -23,6 +24,6 @@ public class AttractionWithAllDTO {
 
     private String name;
     private String address;
-   // private TownWithUUID townUUID;
+    private TownWithUUID townUUID;
 
 }

@@ -1,8 +1,8 @@
 package by.mikulichhanna.travel.guide.web;
 
 import by.mikulichhanna.travel.guide.core.dto.PageDTO;
-import by.mikulichhanna.travel.guide.core.dto.TownCreateDTO;
-import by.mikulichhanna.travel.guide.core.dto.TownWithAllDTO;
+import by.mikulichhanna.travel.guide.core.dto.town.TownCreateDTO;
+import by.mikulichhanna.travel.guide.core.dto.town.TownWithAllDTO;
 import by.mikulichhanna.travel.guide.service.TownService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -22,10 +22,10 @@ public class TownController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @PostMapping
+    @GetMapping
     public ResponseEntity<PageDTO<TownWithAllDTO>> getPage(
             @RequestParam(name = "page", required = false, defaultValue = "0") int numberOfPage,
-            @RequestParam(name = "size", required = false, defaultValue = "20") int size){
+            @RequestParam(name = "size", required = false, defaultValue = "10") int size){
         return ResponseEntity.status(HttpStatus.OK).body(townService.getPage(numberOfPage, size));
     }
 //

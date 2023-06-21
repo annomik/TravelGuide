@@ -1,5 +1,6 @@
-package by.mikulichhanna.travel.guide.core.dto;
+package by.mikulichhanna.travel.guide.core.dto.town;
 
+import by.mikulichhanna.travel.guide.core.dto.attraction.AttractionDTO;
 import lombok.*;
 
 import java.util.List;

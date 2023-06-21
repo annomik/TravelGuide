@@ -1,6 +1,8 @@
 package by.mikulichhanna.travel.guide.web;
 
-import by.mikulichhanna.travel.guide.core.dto.AttractionDTO;
+import by.mikulichhanna.travel.guide.core.dto.PageDTO;
+import by.mikulichhanna.travel.guide.core.dto.attraction.AttractionDTO;
+import by.mikulichhanna.travel.guide.core.dto.attraction.AttractionWithTownDTO;
 import by.mikulichhanna.travel.guide.service.AttractionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,12 +22,12 @@ public class AttractionController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-//    @RequestMapping(method = RequestMethod.GET)
-//    public ResponseEntity<PageDTO<ProductDTO>> getPage(
-//            @RequestParam(name = "page", required = false, defaultValue = "0") int numberOfPage,
-//            @RequestParam(name = "size", required = false, defaultValue = "20") int size){
-//        return ResponseEntity.status(HttpStatus.OK).body(productService.getPage(numberOfPage, size));
-//    }
+    @GetMapping
+    public ResponseEntity<PageDTO<AttractionWithTownDTO>> getPage(
+            @RequestParam(name = "page", required = false, defaultValue = "0") int numberOfPage,
+            @RequestParam(name = "size", required = false, defaultValue = "10") int size){
+        return ResponseEntity.status(HttpStatus.OK).body(attractionService.getPage(numberOfPage, size));
+    }
 
 //    @RequestMapping(path = "/{uuid}/dt_update/{dt_update}", method = RequestMethod.PUT)
 //    public ResponseEntity<?> update(@PathVariable("uuid") UUID uuid,

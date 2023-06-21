@@ -1,9 +1,9 @@
 package by.mikulichhanna.travel.guide.service;
 
-import by.mikulichhanna.travel.guide.core.dto.AttractionWithAllDTO;
+import by.mikulichhanna.travel.guide.core.dto.attraction.AttractionAllDTO;
 import by.mikulichhanna.travel.guide.core.dto.PageDTO;
-import by.mikulichhanna.travel.guide.core.dto.TownCreateDTO;
-import by.mikulichhanna.travel.guide.core.dto.TownWithAllDTO;
+import by.mikulichhanna.travel.guide.core.dto.town.TownCreateDTO;
+import by.mikulichhanna.travel.guide.core.dto.town.TownWithAllDTO;
 import by.mikulichhanna.travel.guide.entity.AttractionEntity;
 import by.mikulichhanna.travel.guide.entity.TownEntity;
 import by.mikulichhanna.travel.guide.repositories.ITownRepository;
@@ -90,9 +90,9 @@ public class TownService {
 
         for (TownEntity townEntity : allEntity) {
             List<AttractionEntity> attractionEntities = townEntity.getAttractions();
-            List<AttractionWithAllDTO> listAttractionDTO = new ArrayList<>();
+            List<AttractionAllDTO> listAttractionDTO = new ArrayList<>();
             for(AttractionEntity attractionEntity: attractionEntities){
-                AttractionWithAllDTO attractionDTO = new AttractionWithAllDTO( attractionEntity.getUuid(),
+                AttractionAllDTO attractionDTO = new AttractionAllDTO( attractionEntity.getUuid(),
                 attractionEntity.getDtCreate(),
                 attractionEntity.getDtUpdate(),
                 attractionEntity.getName(),

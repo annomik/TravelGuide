@@ -1,5 +1,6 @@
-package by.mikulichhanna.travel.guide.core.dto;
+package by.mikulichhanna.travel.guide.core.dto.attraction;
 
+import by.mikulichhanna.travel.guide.core.dto.town.TownWithUUID;
 import lombok.*;
 
 @Getter
