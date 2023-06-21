@@ -18,7 +18,7 @@ public class AttractionService {
 
     @Transactional
     public void addNewAttraction(AttractionDTO attractionDTO) {
-       // validate(productCreateDTO);
+       // validate(attractionDTO);
         AttractionEntity entity = conversionService.convert(attractionDTO, AttractionEntity.class);
         repository.save(entity);
     }

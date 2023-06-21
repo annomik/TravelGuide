@@ -1,6 +1,7 @@
 package by.mikulichhanna.travel.guide.service;
 
 import by.mikulichhanna.travel.guide.core.dto.AttractionDTO;
+import by.mikulichhanna.travel.guide.core.dto.TownCreateDTO;
 import by.mikulichhanna.travel.guide.core.dto.TownWithAttractionsDTO;
 import by.mikulichhanna.travel.guide.entity.AttractionEntity;
 import by.mikulichhanna.travel.guide.entity.TownEntity;
@@ -22,27 +23,12 @@ public class TownService {
 
     private final ITownRepository townRepository;
     private final ConversionService conversionService;
-   // private final TownToEntity townToEntity;
 
     @Transactional
-    public void addTown(TownWithAttractionsDTO townDTO) {
-        //validate(recipeCreateDTO);
+    public void addTown(TownCreateDTO townCreateDTO) {
+        //validate(townDTO);
 //  TownEntity townEntity = townToEntity.convert(townCreateDTO);
-      //  TownEntity townEntity = conversionService.convert(townCreateDTO, TownEntity.class);
-        LocalDateTime dtCreate = LocalDateTime.now().withNano(3);
-        List<AttractionDTO> attractions = townDTO.getAttractions();
-        List<AttractionEntity> attractionEntities = new ArrayList<>();
-        for(AttractionDTO attractionDTO: attractions){
-            AttractionEntity attractionEntity = conversionService.convert(attractionDTO, AttractionEntity.class);
-            attractionEntities.add(attractionEntity);
-        }
-        TownEntity townEntity = new TownEntity(UUID.randomUUID(),
-                dtCreate,
-                dtCreate,
-                townDTO.getName(),
-                townDTO.getCountryName(),
-                townDTO.getNumberOfPopulation(),
-                attractionEntities);
+        TownEntity townEntity = conversionService.convert(townCreateDTO, TownEntity.class);
 
         townRepository.save(townEntity);
     }
