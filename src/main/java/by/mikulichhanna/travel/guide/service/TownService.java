@@ -1,12 +1,19 @@
 package by.mikulichhanna.travel.guide.service;
 
-import by.mikulichhanna.travel.guide.core.dto.TownCreateDTO;
+import by.mikulichhanna.travel.guide.core.dto.AttractionDTO;
+import by.mikulichhanna.travel.guide.core.dto.TownWithAttractionsDTO;
+import by.mikulichhanna.travel.guide.entity.AttractionEntity;
 import by.mikulichhanna.travel.guide.entity.TownEntity;
-import by.mikulichhanna.travel.guide.repositories.api.ITownRepository;
+import by.mikulichhanna.travel.guide.repositories.ITownRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
@@ -15,12 +22,28 @@ public class TownService {
 
     private final ITownRepository townRepository;
     private final ConversionService conversionService;
+   // private final TownToEntity townToEntity;
 
     @Transactional
-    public void addTown(TownCreateDTO townCreateDTO) {
+    public void addTown(TownWithAttractionsDTO townDTO) {
         //validate(recipeCreateDTO);
+//  TownEntity townEntity = townToEntity.convert(townCreateDTO);
+      //  TownEntity townEntity = conversionService.convert(townCreateDTO, TownEntity.class);
+        LocalDateTime dtCreate = LocalDateTime.now().withNano(3);
+        List<AttractionDTO> attractions = townDTO.getAttractions();
+        List<AttractionEntity> attractionEntities = new ArrayList<>();
+        for(AttractionDTO attractionDTO: attractions){
+            AttractionEntity attractionEntity = conversionService.convert(attractionDTO, AttractionEntity.class);
+            attractionEntities.add(attractionEntity);
+        }
+        TownEntity townEntity = new TownEntity(UUID.randomUUID(),
+                dtCreate,
+                dtCreate,
+                townDTO.getName(),
+                townDTO.getCountryName(),
+                townDTO.getNumberOfPopulation(),
+                attractionEntities);
 
-        TownEntity townEntity = conversionService.convert(townCreateDTO, TownEntity.class);
         townRepository.save(townEntity);
     }
 

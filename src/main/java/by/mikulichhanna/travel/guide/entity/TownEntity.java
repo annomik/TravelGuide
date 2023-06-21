@@ -2,9 +2,7 @@ package by.mikulichhanna.travel.guide.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -12,9 +10,11 @@ import java.util.UUID;
 
 @Getter
 @Setter
-@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(schema = "guide", name = "town")
+
 public class TownEntity {
 
     @Id
@@ -32,11 +32,29 @@ public class TownEntity {
     @Column(name = "town_name")
     private String townName;
 
+    @Column(name = "country_name")
+    private String countryName;
+
     @Column(name = "number_of_population")
     private Integer numberOfPopulation;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany //(cascade = CascadeType.MERGE)
     @JoinColumn(name = "town_uuid")
-    private List<TouristAttractionEntity> attractions;
+    private List<AttractionEntity> attractions;
+
+    public TownEntity(UUID uuid,
+                      LocalDateTime dtCreate,
+                      LocalDateTime dtUpdate,
+                      String townName,
+                      String countryName,
+                      Integer numberOfPopulation) {
+        this.uuid = uuid;
+        this.dtCreate = dtCreate;
+        this.dtUpdate = dtUpdate;
+        this.townName = townName;
+        this.countryName = countryName;
+        this.numberOfPopulation = numberOfPopulation;
+    }
+
 
 }

@@ -13,7 +13,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Entity
 @Table(schema = "guide", name = "attraction")
-public class TouristAttractionEntity {
+public class AttractionEntity {
 
     @Id
     @Column(name = "uuid")
@@ -30,7 +30,21 @@ public class TouristAttractionEntity {
     private String name;
 
     @Column(name = "address")
-    private int address;
+    private String address;
+
+//    @ManyToOne
+//    @JoinColumn(name = "town_uuid")
+//    //@Column(name = "town_uuid")
+//    private TownEntity town;
 
 
+    public AttractionEntity(UUID uuid, LocalDateTime dtCreate,
+                            LocalDateTime dtUpdate, String name,
+                            String address) {
+        this.uuid = uuid;
+        this.dtCreate = dtCreate;
+        this.dtUpdate = dtUpdate;
+        this.name = name;
+        this.address = address;
+    }
 }

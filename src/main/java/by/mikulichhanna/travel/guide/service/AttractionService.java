@@ -1,8 +1,8 @@
 package by.mikulichhanna.travel.guide.service;
 
-import by.mikulichhanna.travel.guide.core.dto.TouristAttractionDTO;
-import by.mikulichhanna.travel.guide.repositories.api.ITouristAttractionRepository;
-import by.mikulichhanna.travel.guide.entity.TouristAttractionEntity;
+import by.mikulichhanna.travel.guide.core.dto.AttractionDTO;
+import by.mikulichhanna.travel.guide.repositories.ITouristAttractionRepository;
+import by.mikulichhanna.travel.guide.entity.AttractionEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
@@ -11,15 +11,15 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Service
 @Transactional
-public class TouristAttractionService {
+public class AttractionService {
 
     private final ITouristAttractionRepository repository;
     private final ConversionService conversionService;
 
     @Transactional
-    public void addNewAttraction(TouristAttractionDTO touristAttractionDTO) {
+    public void addNewAttraction(AttractionDTO attractionDTO) {
        // validate(productCreateDTO);
-        TouristAttractionEntity entity = conversionService.convert(touristAttractionDTO, TouristAttractionEntity.class);
+        AttractionEntity entity = conversionService.convert(attractionDTO, AttractionEntity.class);
         repository.save(entity);
     }
 
