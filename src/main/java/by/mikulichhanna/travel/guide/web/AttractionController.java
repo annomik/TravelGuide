@@ -33,10 +33,10 @@ public class AttractionController {
         return ResponseEntity.status(HttpStatus.OK).body(attractionService.getPage(numberOfPage, size));
     }
 
-//    @GetMapping(path = "/{uuid}", method = RequestMethod.GET)
-//    public ResponseEntity<UserDTO> getCard(@PathVariable("uuid") UUID uuid){
-//        return ResponseEntity.status(HttpStatus.OK).body(userService.getCard(uuid));
-//    }
+    @GetMapping(path = "/{uuid}")
+    public ResponseEntity<AttractionWithTownDTO> getCard(@PathVariable("uuid") UUID uuid){
+        return ResponseEntity.status(HttpStatus.OK).body(attractionService.getCard(uuid));
+    }
 
     @DeleteMapping(path = "/{uuid}")
     public ResponseEntity<?> delete(@PathVariable("uuid") UUID uuid){

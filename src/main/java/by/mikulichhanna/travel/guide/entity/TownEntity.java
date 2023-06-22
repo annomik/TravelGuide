@@ -30,7 +30,7 @@ public class TownEntity {
 
     @NotEmpty
     @Column(name = "town_name")
-    private String townName;
+    private String name;
 
     @Column(name = "country_name")
     private String countryName;
@@ -44,13 +44,13 @@ public class TownEntity {
     public TownEntity(UUID uuid,
                       LocalDateTime dtCreate,
                       LocalDateTime dtUpdate,
-                      String townName,
+                      String name,
                       String countryName,
                       Integer numberOfPopulation) {
         this.uuid = uuid;
         this.dtCreate = dtCreate;
         this.dtUpdate = dtUpdate;
-        this.townName = townName;
+        this.name = name;
         this.countryName = countryName;
         this.numberOfPopulation = numberOfPopulation;
     }

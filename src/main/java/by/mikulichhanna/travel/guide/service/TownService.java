@@ -2,7 +2,6 @@ package by.mikulichhanna.travel.guide.service;
 
 import by.mikulichhanna.travel.guide.core.dto.attraction.AttractionAllDTO;
 import by.mikulichhanna.travel.guide.core.dto.PageDTO;
-import by.mikulichhanna.travel.guide.core.dto.attraction.AttractionDTO;
 import by.mikulichhanna.travel.guide.core.dto.town.TownCreateDTO;
 import by.mikulichhanna.travel.guide.core.dto.town.TownWithAllDTO;
 import by.mikulichhanna.travel.guide.core.exception.SingleErrorResponse;
@@ -31,10 +30,12 @@ public class TownService {
 
     @Transactional
     public void addTown(TownCreateDTO townCreateDTO) {
+        TownEntity EntityByName = townRepository.findByName(townCreateDTO.getName());
+        if (EntityByName != null){
+            throw new SingleErrorResponse("Город с таким именем уже есть в базе");
+        }
         //validate(townDTO);
-//  TownEntity townEntity = townToEntity.convert(townCreateDTO);
         TownEntity townEntity = conversionService.convert(townCreateDTO, TownEntity.class);
-
         townRepository.save(townEntity);
     }
 
@@ -43,7 +44,16 @@ public class TownService {
     }
 
     public void delete(UUID uuid) {
-        townRepository.deleteById(uuid);
+        if(uuid == null){
+            throw new SingleErrorResponse("Введите параметры для удаления");
+        } else {
+            Optional<TownEntity> findEntity = townRepository.findById(uuid);
+            if (!findEntity.isPresent()) {
+                throw new SingleErrorResponse("Города с id " + uuid + " для удаления не найдено");
+            } else {
+                townRepository.deleteById(uuid);
+            }
+        }
     }
 
     @Transactional
@@ -58,7 +68,7 @@ public class TownService {
         } else {
             TownEntity entity = findEntity.get();
             if (entity.getDtUpdate().isEqual(dtUpdate) && entity.getUuid().equals(uuid)) {
-                entity.setTownName(townCreateDTO.getName());
+                entity.setName(townCreateDTO.getName());
                 entity.setCountryName(townCreateDTO.getCountryName());
                 entity.setNumberOfPopulation(townCreateDTO.getNumberOfPopulation());
 
@@ -103,7 +113,7 @@ public class TownService {
             TownWithAllDTO townDTO = new TownWithAllDTO(townEntity.getUuid(),
                     townEntity.getDtCreate(),
                     townEntity.getDtUpdate(),
-                    townEntity.getTownName(),
+                    townEntity.getName(),
                     townEntity.getCountryName(),
                     townEntity.getNumberOfPopulation(),
                     listAttractionDTO

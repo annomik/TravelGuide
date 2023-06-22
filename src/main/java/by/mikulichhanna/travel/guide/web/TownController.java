@@ -46,13 +46,4 @@ public class TownController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-
-//
-//    @RequestMapping(path = "/{uuid}/dt_update/{dt_update}", method = RequestMethod.PUT)
-//    public ResponseEntity<?> update(@PathVariable("uuid") UUID uuid,
-//                                    @PathVariable("dt_update") LocalDateTime dtUpdate, //??????
-//                                    @RequestBody RecipeCreateDTO recipeCreateDTO ) {
-//        recipeService.update(uuid, dtUpdate, recipeCreateDTO);
-//        return ResponseEntity.status(HttpStatus.OK).build();
-//    }
 }

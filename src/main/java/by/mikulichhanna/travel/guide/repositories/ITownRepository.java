@@ -12,5 +12,7 @@ import java.util.UUID;
 public interface ITownRepository extends ListCrudRepository<TownEntity, UUID> {
 
     Page<TownEntity> findAll(Pageable pageable);
+
+    TownEntity findByName(String name);
     void deleteById(UUID uuid);
 }

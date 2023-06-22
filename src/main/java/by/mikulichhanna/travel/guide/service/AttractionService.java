@@ -3,7 +3,9 @@ package by.mikulichhanna.travel.guide.service;
 import by.mikulichhanna.travel.guide.core.dto.PageDTO;
 import by.mikulichhanna.travel.guide.core.dto.attraction.AttractionDTO;
 import by.mikulichhanna.travel.guide.core.dto.attraction.AttractionWithTownDTO;
+import by.mikulichhanna.travel.guide.core.exception.MultipleErrorResponse;
 import by.mikulichhanna.travel.guide.core.exception.SingleErrorResponse;
+import by.mikulichhanna.travel.guide.core.exception.Error;
 import by.mikulichhanna.travel.guide.entity.AttractionEntity;
 import by.mikulichhanna.travel.guide.entity.TownEntity;
 import by.mikulichhanna.travel.guide.repositories.IAttractionRepository;
@@ -32,7 +34,7 @@ public class AttractionService {
 
     @Transactional
     public void addNewAttraction(AttractionDTO attractionDTO) {
-       // validate(attractionDTO);
+        validate(attractionDTO);
         LocalDateTime dtCreate = LocalDateTime.now();
         Optional<TownEntity> townFromDB = townService.findByUUID(attractionDTO.getTownUUID().getUuid());
         TownEntity townEntity = townFromDB.get();
@@ -46,17 +48,34 @@ public class AttractionService {
         attractionRepository.save(attractionEntity);
     }
 
-//    @Override
-//    public Optional<TouristAttractionEntity> findByUUID(UUID uuid){
-//        return  productRepository.findById(uuid);
-//    }
-//
+    public AttractionWithTownDTO getCard(UUID uuid){
+
+        Optional<AttractionEntity> findEntity = attractionRepository.findById(uuid);
+        if(findEntity.isEmpty()){
+            throw new SingleErrorResponse("Достопримечательности с id " + uuid + " не найдено.");
+        }
+        AttractionEntity userEntity = findEntity.get();
+        return conversionService.convert(userEntity, AttractionWithTownDTO.class);
+    }
+
+    public void delete(UUID uuid) {
+        if(uuid == null ){
+            throw new SingleErrorResponse("Введите параметры для удаления");
+        }
+        Optional<AttractionEntity> findEntity = attractionRepository.findById(uuid);
+        if (!findEntity.isPresent()) {
+            throw new SingleErrorResponse("Достопримечательности с id " + uuid + " для обновления не найдено");
+        } else {
+            attractionRepository.deleteById(uuid);
+        }
+    }
+
     @Transactional
     public void update(UUID uuid, LocalDateTime dtUpdate, AttractionDTO attractionDTO) {
         if(uuid == null || dtUpdate == null){
             throw new SingleErrorResponse("Введите параметры для обновления");
         }
-//        validate(attractionDTO);
+        validate(attractionDTO);
         Optional<AttractionEntity> findEntity = attractionRepository.findById(uuid);
         if (!findEntity.isPresent()) {
             throw new SingleErrorResponse("Достопримечательности с id " + uuid + " для обновления не найдено");
@@ -91,35 +110,21 @@ public class AttractionService {
                 allEntity.isLast(),
                 content );
     }
+    public void validate(AttractionDTO attractionDTO)  {
+        MultipleErrorResponse multipleErrorResponse = new MultipleErrorResponse();
 
-    public void delete(UUID uuid) {
-        attractionRepository.deleteById(uuid);
+        if (attractionDTO.getName() == null || attractionDTO.getName().isBlank()){
+            multipleErrorResponse.setErrors(new Error("Name", "Поле не заполнено"));
+        }
+        if (attractionDTO.getAddress() == null || attractionDTO.getAddress().isBlank()){
+            multipleErrorResponse.setErrors(new Error("Address", "Поле не заполнено"));
+        }
+        if (attractionDTO.getTownUUID()== null ) {
+            multipleErrorResponse.setErrors(new Error("TownUUID", "Поле не заполнено"));
+        }
+
+        if (!multipleErrorResponse.getErrors().isEmpty()) {
+            throw multipleErrorResponse;
+        }
     }
-//
-//    @Override
-//    public void validate(ProductCreateDTO productCreateDTO)  {
-//        MultipleErrorResponse multipleErrorResponse = new MultipleErrorResponse();
-//
-//        if (productCreateDTO.getTitle() == null || productCreateDTO.getTitle().isBlank()){
-//            multipleErrorResponse.setErrors(new Error("Title", "Поле не заполнено"));
-//        }
-//        if (productCreateDTO.getWeight() <= 0 && productCreateDTO.getWeight() % 1 == 0){
-//            multipleErrorResponse.setErrors(new Error("Weight", "Введите целое положительное число"));
-//        }
-//        if (productCreateDTO.getCalories() <= 0 && productCreateDTO.getCalories() % 1 == 0) {
-//            multipleErrorResponse.setErrors(new Error("Calories", "Введите целое положительное число"));
-//        }
-//        if (productCreateDTO.getProteins() <= 0 ) {
-//            multipleErrorResponse.setErrors(new Error("Proteins", "Введите корректное значение. Например: 4.2"));
-//        }
-//        if (productCreateDTO.getFats() <= 0 ) {
-//            multipleErrorResponse.setErrors(new Error("Fats", "Введите корректное значение. Например: 4.2"));
-//        }
-//        if (productCreateDTO.getCarbohydrates() <= 0 ) {
-//            multipleErrorResponse.setErrors(new Error("Carbohydrates", "Введите корректное значение. Например: 50.2"));
-//        }
-//        if (!multipleErrorResponse.getErrors().isEmpty()) {
-//            throw multipleErrorResponse;
-//        }
-//    }
 }
