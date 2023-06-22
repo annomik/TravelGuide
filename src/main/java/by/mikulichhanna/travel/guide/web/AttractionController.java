@@ -1,6 +1,7 @@
 package by.mikulichhanna.travel.guide.web;
 
 import by.mikulichhanna.travel.guide.core.dto.PageDTO;
+import by.mikulichhanna.travel.guide.core.dto.attraction.AttractionAllDTO;
 import by.mikulichhanna.travel.guide.core.dto.attraction.AttractionDTO;
 import by.mikulichhanna.travel.guide.core.dto.attraction.AttractionWithTownDTO;
 import by.mikulichhanna.travel.guide.service.AttractionService;
@@ -9,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -31,12 +33,10 @@ public class AttractionController {
         return ResponseEntity.status(HttpStatus.OK).body(attractionService.getPage(numberOfPage, size));
     }
 
-
 //    @GetMapping(path = "/{uuid}", method = RequestMethod.GET)
 //    public ResponseEntity<UserDTO> getCard(@PathVariable("uuid") UUID uuid){
 //        return ResponseEntity.status(HttpStatus.OK).body(userService.getCard(uuid));
 //    }
-
 
     @DeleteMapping(path = "/{uuid}")
     public ResponseEntity<?> delete(@PathVariable("uuid") UUID uuid){
@@ -44,12 +44,11 @@ public class AttractionController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-
-//    @RequestMapping(path = "/{uuid}/dt_update/{dt_update}", method = RequestMethod.PUT)
-//    public ResponseEntity<?> update(@PathVariable("uuid") UUID uuid,
-//                                    @PathVariable("dt_update") LocalDateTime dtUpdate,
-//                                    @RequestBody ProductCreateDTO product) {
-//        productService.update(uuid, dtUpdate, product);
-//        return ResponseEntity.status(HttpStatus.OK).build();
-//    }
+    @PutMapping(path = "/{uuid}/dt_update/{dt_update}")
+    public ResponseEntity<?> update(@PathVariable("uuid") UUID uuid,
+                                    @PathVariable("dt_update") LocalDateTime dtUpdate,
+                                    @RequestBody AttractionDTO attractionDTO) {
+        attractionService.update(uuid, dtUpdate, attractionDTO);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
 }

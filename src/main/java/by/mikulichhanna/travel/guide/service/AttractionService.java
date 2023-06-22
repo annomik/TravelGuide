@@ -3,6 +3,7 @@ package by.mikulichhanna.travel.guide.service;
 import by.mikulichhanna.travel.guide.core.dto.PageDTO;
 import by.mikulichhanna.travel.guide.core.dto.attraction.AttractionDTO;
 import by.mikulichhanna.travel.guide.core.dto.attraction.AttractionWithTownDTO;
+import by.mikulichhanna.travel.guide.core.exception.SingleErrorResponse;
 import by.mikulichhanna.travel.guide.entity.AttractionEntity;
 import by.mikulichhanna.travel.guide.entity.TownEntity;
 import by.mikulichhanna.travel.guide.repositories.IAttractionRepository;
@@ -50,32 +51,27 @@ public class AttractionService {
 //        return  productRepository.findById(uuid);
 //    }
 //
-//    @Override
-//    public void update(UUID uuid, LocalDateTime dtUpdate, ProductCreateDTO productCreateDTO) {
-//        if(uuid == null || dtUpdate == null){
-//            throw new SingleErrorResponse("Введите параметры для обновления");
-//        }
-//        validate(productCreateDTO);
-//        Optional<TouristAttractionEntity> findEntity = productRepository.findById(uuid);
-//        if (!findEntity.isPresent()) {
-//            throw new SingleErrorResponse("Продукта с id " + uuid + " для обновления не найдено");
-//        } else {
-//            TouristAttractionEntity entity = findEntity.get();
-//            if (entity.getDtUpdate().isEqual(dtUpdate) && entity.getUuid().equals(uuid)) {
-//                entity.setName(productCreateDTO.getTitle());
-//                entity.setAddress(productCreateDTO.getWeight());
-//                entity.setCalories(productCreateDTO.getCalories());
-//                entity.setProteins(productCreateDTO.getProteins());
-//                entity.setFats(productCreateDTO.getFats());
-//                entity.setCarbohydrates(productCreateDTO.getCarbohydrates());
-//
-//                productRepository.save(entity);
-//            } else {
-//                throw new SingleErrorResponse("Версии продукта с id " + uuid + " не совпадают!");
-//            }
-//        }
-//    }
-//
+    @Transactional
+    public void update(UUID uuid, LocalDateTime dtUpdate, AttractionDTO attractionDTO) {
+        if(uuid == null || dtUpdate == null){
+            throw new SingleErrorResponse("Введите параметры для обновления");
+        }
+//        validate(attractionDTO);
+        Optional<AttractionEntity> findEntity = attractionRepository.findById(uuid);
+        if (!findEntity.isPresent()) {
+            throw new SingleErrorResponse("Продукта с id " + uuid + " для обновления не найдено");
+        } else {
+            AttractionEntity entity = findEntity.get();
+            if (entity.getDtUpdate().isEqual(dtUpdate) && entity.getUuid().equals(uuid)) {
+                entity.setName(attractionDTO.getName());
+                entity.setAddress(attractionDTO.getAddress());
+
+                attractionRepository.save(entity);
+            } else {
+                throw new SingleErrorResponse("Версии продукта с id " + uuid + " не совпадают!");
+            }
+        }
+    }
 
     public PageDTO<AttractionWithTownDTO> getPage(int numberOfPage, int size) {
         Pageable pageable = PageRequest.of(numberOfPage, size);
