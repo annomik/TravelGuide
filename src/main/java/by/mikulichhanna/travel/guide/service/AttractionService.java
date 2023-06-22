@@ -59,7 +59,7 @@ public class AttractionService {
 //        validate(attractionDTO);
         Optional<AttractionEntity> findEntity = attractionRepository.findById(uuid);
         if (!findEntity.isPresent()) {
-            throw new SingleErrorResponse("Продукта с id " + uuid + " для обновления не найдено");
+            throw new SingleErrorResponse("Достопримечательности с id " + uuid + " для обновления не найдено");
         } else {
             AttractionEntity entity = findEntity.get();
             if (entity.getDtUpdate().isEqual(dtUpdate) && entity.getUuid().equals(uuid)) {
@@ -68,7 +68,7 @@ public class AttractionService {
 
                 attractionRepository.save(entity);
             } else {
-                throw new SingleErrorResponse("Версии продукта с id " + uuid + " не совпадают!");
+                throw new SingleErrorResponse("Версии достопримечательности с id " + uuid + " не совпадают!");
             }
         }
     }

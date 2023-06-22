@@ -2,8 +2,10 @@ package by.mikulichhanna.travel.guide.service;
 
 import by.mikulichhanna.travel.guide.core.dto.attraction.AttractionAllDTO;
 import by.mikulichhanna.travel.guide.core.dto.PageDTO;
+import by.mikulichhanna.travel.guide.core.dto.attraction.AttractionDTO;
 import by.mikulichhanna.travel.guide.core.dto.town.TownCreateDTO;
 import by.mikulichhanna.travel.guide.core.dto.town.TownWithAllDTO;
+import by.mikulichhanna.travel.guide.core.exception.SingleErrorResponse;
 import by.mikulichhanna.travel.guide.entity.AttractionEntity;
 import by.mikulichhanna.travel.guide.entity.TownEntity;
 import by.mikulichhanna.travel.guide.repositories.ITownRepository;
@@ -13,6 +15,7 @@ import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -41,6 +44,29 @@ public class TownService {
 
     public void delete(UUID uuid) {
         townRepository.deleteById(uuid);
+    }
+
+    @Transactional
+    public void update(UUID uuid, LocalDateTime dtUpdate, TownCreateDTO townCreateDTO) {
+        if(uuid == null || dtUpdate == null){
+            throw new SingleErrorResponse("Введите параметры для обновления");
+        }
+//        validate(townCreateDTO);
+        Optional<TownEntity> findEntity = townRepository.findById(uuid);
+        if (!findEntity.isPresent()) {
+            throw new SingleErrorResponse("Города с id " + uuid + " для обновления не найдено");
+        } else {
+            TownEntity entity = findEntity.get();
+            if (entity.getDtUpdate().isEqual(dtUpdate) && entity.getUuid().equals(uuid)) {
+                entity.setTownName(townCreateDTO.getName());
+                entity.setCountryName(townCreateDTO.getCountryName());
+                entity.setNumberOfPopulation(townCreateDTO.getNumberOfPopulation());
+
+                townRepository.save(entity);
+            } else {
+                throw new SingleErrorResponse("Версии города с id " + uuid + " не совпадают!");
+            }
+        }
     }
 
 //    @Override

@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -36,6 +37,16 @@ public class TownController {
         townService.delete(uuid);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
+
+    @PutMapping(path = "/{uuid}/dt_update/{dt_update}")
+    public ResponseEntity<?> update(@PathVariable("uuid") UUID uuid,
+                                    @PathVariable("dt_update") LocalDateTime dtUpdate,
+                                    @RequestBody TownCreateDTO townCreateDTO) {
+        townService.update(uuid, dtUpdate, townCreateDTO);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+
 //
 //    @RequestMapping(path = "/{uuid}/dt_update/{dt_update}", method = RequestMethod.PUT)
 //    public ResponseEntity<?> update(@PathVariable("uuid") UUID uuid,
