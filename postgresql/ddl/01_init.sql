@@ -1,0 +1,3 @@
+\c root
+CREATE SCHEMA IF NOT EXISTS guide
+    AUTHORIZATION root;
