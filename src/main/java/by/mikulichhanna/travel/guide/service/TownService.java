@@ -69,36 +69,6 @@ public class TownService {
         }
     }
 
-//    @Override
-//    public void update(UUID uuid, LocalDateTime dtUpdate, RecipeCreateDTO recipeCreateDTO) {
-//        if (uuid == null || dtUpdate == null || recipeCreateDTO == null) {
-//            throw new SingleErrorResponse("Введите параметры для обновления");
-//        }
-//        validate(recipeCreateDTO);
-//        Optional<TownEntity> findEntity = recipeRepository.findById(uuid);
-//        if (!findEntity.isPresent()) {
-//            throw new SingleErrorResponse("Рецепта с id " + uuid + " для обновления не найдено!");
-//        }
-//        TownEntity townEntity = findEntity.get();
-//        if (!(townEntity.getDtUpdate().isEqual(dtUpdate) && townEntity.getUuid().equals(uuid))) {
-//            throw new SingleErrorResponse("Версии рецепта с id " + uuid + " не совпадают!");
-//        }
-//        List<CompositionDTO> compositionDTOList = recipeCreateDTO.getComposition();
-//        List<CompositionEntity> compositionEntityList = new ArrayList<>();
-//        for (CompositionDTO composition : compositionDTOList) {
-//            Optional<TouristAttractionEntity> productFoundInDB = productService.findByUUID(composition.getProduct().getUuid());
-//            TouristAttractionEntity touristAttractionEntity = productFoundInDB.get();
-//            compositionEntityList.add(new CompositionEntity(
-//                    UUID.randomUUID(),
-//                    touristAttractionEntity,
-//                    composition.getWeight()));
-//        }
-//        townEntity.setTitle(recipeCreateDTO.getTitle());
-//        townEntity.setComposition(compositionEntityList);
-//        recipeRepository.save(townEntity);
-//    }
-//
-
     public PageDTO<TownWithAllDTO> getPage(int numberOfPage, int size) {
         Pageable pageable = PageRequest.of(numberOfPage, size);
         Page<TownEntity> allEntity = townRepository.findAll(pageable);
