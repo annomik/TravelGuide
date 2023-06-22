@@ -39,7 +39,6 @@ public class TownEntity {
     private Integer numberOfPopulation;
 
     @OneToMany (fetch=FetchType.LAZY, mappedBy = "town", cascade = CascadeType.ALL )
-   // @JoinColumn(name = "town_uuid")
     private List<AttractionEntity> attractions;
 
     public TownEntity(UUID uuid,

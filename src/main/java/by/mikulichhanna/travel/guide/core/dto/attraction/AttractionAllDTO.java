@@ -23,6 +23,5 @@ public class AttractionAllDTO {
 
     private String name;
     private String address;
-   // private TownWithUUID townUUID;
 
 }

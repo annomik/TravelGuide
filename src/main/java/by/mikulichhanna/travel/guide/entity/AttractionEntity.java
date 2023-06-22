@@ -32,7 +32,7 @@ public class AttractionEntity {
     @Column(name = "address")
     private String address;
 
-    @ManyToOne (fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+    @ManyToOne (fetch=FetchType.LAZY)
     @JoinColumn(name = "town_uuid")
     private TownEntity town;
 

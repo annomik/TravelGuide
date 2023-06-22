@@ -39,6 +39,10 @@ public class TownService {
         return  townRepository.findById(uuid);
     }
 
+    public void delete(UUID uuid) {
+        townRepository.deleteById(uuid);
+    }
+
 //    @Override
 //    public void update(UUID uuid, LocalDateTime dtUpdate, RecipeCreateDTO recipeCreateDTO) {
 //        if (uuid == null || dtUpdate == null || recipeCreateDTO == null) {

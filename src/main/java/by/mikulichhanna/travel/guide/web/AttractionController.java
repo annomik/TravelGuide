@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/attraction")
@@ -28,6 +30,20 @@ public class AttractionController {
             @RequestParam(name = "size", required = false, defaultValue = "10") int size){
         return ResponseEntity.status(HttpStatus.OK).body(attractionService.getPage(numberOfPage, size));
     }
+
+
+//    @GetMapping(path = "/{uuid}", method = RequestMethod.GET)
+//    public ResponseEntity<UserDTO> getCard(@PathVariable("uuid") UUID uuid){
+//        return ResponseEntity.status(HttpStatus.OK).body(userService.getCard(uuid));
+//    }
+
+
+    @DeleteMapping(path = "/{uuid}")
+    public ResponseEntity<?> delete(@PathVariable("uuid") UUID uuid){
+        attractionService.delete(uuid);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
 
 //    @RequestMapping(path = "/{uuid}/dt_update/{dt_update}", method = RequestMethod.PUT)
 //    public ResponseEntity<?> update(@PathVariable("uuid") UUID uuid,

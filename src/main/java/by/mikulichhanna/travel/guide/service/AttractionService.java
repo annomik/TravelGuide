@@ -95,6 +95,10 @@ public class AttractionService {
                 allEntity.isLast(),
                 content );
     }
+
+    public void delete(UUID uuid) {
+        attractionRepository.deleteById(uuid);
+    }
 //
 //    @Override
 //    public void validate(ProductCreateDTO productCreateDTO)  {
