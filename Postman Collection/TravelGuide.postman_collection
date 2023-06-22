@@ -1,0 +1,274 @@
+{
+	"info": {
+		"_postman_id": "bc64e1da-5b9c-40b4-8c50-fdffe97c78c5",
+		"name": "Guide",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24691972",
+		"_collection_link": "https://red-capsule-181213.postman.co/workspace/Team-Workspace~adc4789f-bc18-4264-8156-168982691843/collection/24691972-bc64e1da-5b9c-40b4-8c50-fdffe97c78c5?action=share&creator=24691972&source=collection_link"
+	},
+	"item": [
+		{
+			"name": "Постраничный вывод городов с достопримечательностями",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/town?page=0&size=3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"town"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "size",
+							"value": "3"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Page of attraction",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/attraction?page=0&size=10",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"attraction"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "size",
+							"value": "10"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Посмотреть достопримечательность по UUID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/attraction/4446350c-4aad-4aeb-9100-fb679305590c",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"attraction",
+						"4446350c-4aad-4aeb-9100-fb679305590c"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add new town",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Pinsk\",\r\n  \"countryName\": \"BY\",\r\n  \"numberOfPopulation\": 80000  \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/town",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"town"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add attraction",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\r\n  \"name\": \"Brest Fortress\",\r\n  \"address\": \"Green street\",\r\n  \"townUUID\": {\r\n  \"uuid\": \"2225fc3c-34d9-4e8a-bb3b-155b4a37ed0d\"\r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/attraction",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"attraction"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update attraction. New name",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\r\n  \"name\": \"BIG Red Church\",\r\n  \"address\": \"Nezavisimosti avenue\",\r\n  \"townUUID\": {\r\n  \"uuid\": \"3335fc3c-34d9-4e8a-bb3b-155b4a37ed0d\"\r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/attraction/22b6350c-4aad-4aeb-9100-fb679305590c/dt_update/1687442300072",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"attraction",
+						"22b6350c-4aad-4aeb-9100-fb679305590c",
+						"dt_update",
+						"1687442300072"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update town. New numberOfPopulation",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Brest\",\r\n  \"countryName\": \"BY\",\r\n  \"numberOfPopulation\": 999999  \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/town/2225fc3c-34d9-4e8a-bb3b-155b4a37ed0d/dt_update/1687446924891",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"town",
+						"2225fc3c-34d9-4e8a-bb3b-155b4a37ed0d",
+						"dt_update",
+						"1687446924891"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete attraction",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/attraction/11b6350c-4aad-4aeb-9100-fb679305590c",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"attraction",
+						"11b6350c-4aad-4aeb-9100-fb679305590c"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete town",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/town/11c5fc3c-34d9-4e8a-bb3b-155b4a37ed0d",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"town",
+						"11c5fc3c-34d9-4e8a-bb3b-155b4a37ed0d"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
