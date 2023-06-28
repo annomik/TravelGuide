@@ -1,5 +1,5 @@
 CREATE SCHEMA IF NOT EXISTS guide
-    AUTHORIZATION root;
+    AUTHORIZATION postgres;
 
 CREATE TABLE IF NOT EXISTS guide.attraction
 (
