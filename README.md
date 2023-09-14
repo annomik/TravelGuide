@@ -1,28 +1,26 @@
 # Travel Guide
-- Приложение предназначено для создания базы данных городов и их достопримечательностей. 
-- 
-- Доступны опции добавления, просмотра, редактирования и удаления.
-- 
-- По умолчанию предполагается, что все достопримечательности находятся в городах.
-- 
-- Сначала добавляется город, потом его достопримечательность.
--
-- В приложении предусмотрена обработка ошибок.
--
-- Java 17
-- Maven
-- PostgreSQL (pgAdmin4)
-## Для того, чтобы проверить работу приложения:
-- Скачать проект
-- -
-- В папке postgresql выполнить сначала DDL запросы, потом DML запросы
-- -
-- Для тестирования приложения использовать коллекцию Postman. (Находится в папке Postman Collection)
--
------
-- По всем вопросам можно обращаться на почту mikulichhanna@gmail.com
-- либо в телеграм https://t.me/lancelot08
 
-#Схема таблиц базы данных:
+- The application is designed to create a database of cities and their attractions.
+-
+- Available options: add, view, edit and delete cities or their attractions.
+-
+- By default: all attractions are located in cities.
+-
+- First - the city is added, next -  their attraction(s).
+-
+- The application supports processing of incorrectly entered data.
+-
+ <b> Stack</b>:  Java 17, SpringBoot, Maven, PostgreSQL.
+## To use the application::
+- Download the project
+- -
+- In the  folder <b>postgresql </b>, first execute DDL queries, then DML queries
+- -
+- To test the application, use the Postman collection ( folder: <b> Postman Collection <b>). 
+-----
+ Contact me:  mikulichhanna@gmail.com
+ Telegram: https://t.me/lancelot08
+
+#Database table schema:
 -
 ![img_1.png](img_1.png)
